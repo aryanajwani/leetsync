@@ -10,10 +10,9 @@ class Solution {
             if(arr[right] == 0) ++count;
 
             //invalid window - shrink
-            if(count >k){
-                while(arr[left] !=0) ++left;
+            if(count > k){
+                if(arr[left] == 0) --count;
                 ++left;
-                --count;
             }
 
             //window valid
