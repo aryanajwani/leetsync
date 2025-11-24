@@ -1,23 +1,21 @@
 class Solution {
     public int lengthOfLongestSubstring(String str) {
-        //your code goes here
-        int lastSeen[] = new int[128];
-        
-        int left=0, right=0, maxLength=0;
-        Arrays.fill(lastSeen, -1);
+        int hash[] = new int[128];
+        int maxLength = 0;
 
-        while(right <str.length()){
-            char chr = str.charAt(right);
+        for(int i=0; i<str.length(); i++){
+            for(int j=i; j<str.length(); j++){
+                char chr = str.charAt(j);
+                if(hash[chr] ==1){
+                    //max I can get starting with this char
+                    break;
+                }
 
-            //if not a valid window - shrink
-            if(lastSeen[chr] >= left){
-                left = lastSeen[chr]+1;
-          }
+                maxLength = Math.max(maxLength, j-i+1);
+                hash[chr] =1;
+            }
 
-          lastSeen[chr] = right;
-
-          maxLength = Math.max(maxLength, right-left+1);
-          ++right;
+            hash = new int[128];
         }
 
         return maxLength;
