@@ -18,20 +18,17 @@ class Solution {
             hash[chr]--;
 
             //can be a window
-
-            if(count == t.length()){
-                while(count == t.length()){
-                    hash[str.charAt(left)]++;
-                    if(hash[str.charAt(left)] >0) count--;
-                    left++;
+            while(count == t.length()){
+                if(right-left+1 < minLength){
+                    minLength = right-left+1;
+                    startIndex = left;
                 }
-
-                if(right-left+2 < minLength){
-                    minLength = right-left+2;
-                    startIndex = left-1;
-                }
+                
+                hash[str.charAt(left)]++;
+                if (hash[str.charAt(left)] >0) count--;
+                left++;
             }
-            
+
             right++;
         }
 
