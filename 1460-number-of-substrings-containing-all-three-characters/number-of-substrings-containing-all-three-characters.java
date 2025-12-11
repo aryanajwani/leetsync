@@ -1,25 +1,18 @@
 class Solution {
     public int numberOfSubstrings(String s) {
         char str[] = s.toCharArray();
-        int countA=0, countB=0, countC=0;
+        int lastSeen[] = new int[]{-1, -1, -1}; 
         int count =0;
 
-        int right=0, left=0;
+        int right=0;
 
         while(right< str.length){
-            if(str[right]=='a')  countA++;
-            else if(str[right] == 'b')  countB++;
-            else if(str[right] == 'c')  countC++;
-            
-            while(countA>=1 && countB>=1 && countC>=1){
-                count+= str.length-right;
+            lastSeen[str[right]-'a'] = right;
 
-                if(str[left]=='a')  countA--;
-                else if(str[left] == 'b')  countB--;
-                else if(str[left] == 'c')  countC--;
+            int minLastSeen = Math.min(Math.min(lastSeen[0], lastSeen[1]), lastSeen[2]);
 
-                left++;
-            }
+            //means we have a window
+            if(minLastSeen!= -1) count+= minLastSeen+1;
 
             right++;
         }
