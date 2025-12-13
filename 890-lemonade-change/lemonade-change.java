@@ -1,33 +1,33 @@
 class Solution {
-    public boolean lemonadeChange(int[] arr) {
-        int change[] = new int[]{0, 0, 0};
-        for(int i=0; i<arr.length; i++){
-            if(arr[i]== 5) ++change[0];
+    public boolean lemonadeChange(int[] bills) {
+        int five=0, ten=0;
 
-            else if(arr[i]==10){
-                if(change[0] == 0) return false;
+        for(int bill : bills){
+            if(bill == 5) five++;
+
+            else if (bill == 10){
+                if (five ==0) return false;
                 else{
-                    ++change[1];
-                    --change[0];
+                    ten++;
+                    five--;
                 }
             }
 
-            else if(arr[i]==20){
-                //return 15
-                if(change[0] ==0) return false;
+            else if(bill == 20){
+                if(five ==0) return false;
 
-                if((change[1]>=1 && change[0]>=1 )){
-                    ++change[2];
-                    --change[1];
-                    --change[0];
+                else if(ten>=1 && five>=1){
+                    ten--;
+                    five--;
                 }
-                else if(change[0] >= 3) {
-                    ++change[2];
-                    change[0] -= 3;
+                else if(five >= 3){
+                    five -= 3;
                 }
                 else return false;
             }
+            
         }
+
         return true;
     }
 }
