@@ -1,18 +1,25 @@
 class Solution {
-    public int findContentChildren(int[] student, int[] cookie) {
-        // int student[] = g.clone();
-        //  int cookie[] = s.clone();
-         Arrays.sort(student);
-         Arrays.sort(cookie);
+    public int findContentChildren(int[] Student, int[] Cookie) {
+        int n = Student.length;
+        int m = Cookie.length;
+        // Pointers
+        int l = 0, r = 0;
+        // Sorting of arrays
+        Arrays.sort(Student);
+        Arrays.sort(Cookie);
 
-         int i=0, j=0;
-         while(i<student.length && j<cookie.length){
-            if(cookie[j] >= student[i]){
-                i++;
+        // Traverse through both arrays
+        while (l < n && r < m) {
+            /*If the current cookie can satisfy 
+            the current student, move to the 
+            next student*/
+            if (Cookie[r] >= Student[l]) {
+                l++;
             }
-            j++;
-         }
-
-         return i;
+            // Move to next cookie
+            r++;
+        }
+        // Return number of students
+        return l;
     }
 }
