@@ -1,7 +1,7 @@
 class Solution {
-    public int findContentChildren(int[] g, int[] s) {
-        int student[] = g.clone();
-         int cookie[] = s.clone();
+    public int findContentChildren(int[] student, int[] cookie) {
+        // int student[] = g.clone();
+        //  int cookie[] = s.clone();
          Arrays.sort(student);
          Arrays.sort(cookie);
 
