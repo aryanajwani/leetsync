@@ -4,7 +4,6 @@ class Solution {
         int prev = 1;
 
         int i = 1;
-
         while (i < ratings.length) {
             // increasing slope
             if (ratings[i - 1] < ratings[i]) {
@@ -17,7 +16,7 @@ class Solution {
             }
 
             // decreasing slope
-            else if (ratings[i - 1] > ratings[i]) {
+            else {
                 int peak = prev;
 
                 int count = 1;
