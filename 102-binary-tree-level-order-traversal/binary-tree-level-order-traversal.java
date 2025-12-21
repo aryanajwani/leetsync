@@ -15,11 +15,12 @@
  */
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> traversal = new ArrayList<>();
-        if(root == null) return traversal;
-        
+        if(root == null) return new ArrayList<>();
+    
         Queue<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
+
+        List<List<Integer>> traversal = new ArrayList<>();
 
         while(!queue.isEmpty()){
             List<Integer> list = new ArrayList<>();
