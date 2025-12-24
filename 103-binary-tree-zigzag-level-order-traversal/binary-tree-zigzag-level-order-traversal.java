@@ -25,7 +25,7 @@ class Solution {
         boolean isLeftToRight= true;
         while(!queue.isEmpty()){
             int size = queue.size();
-            Deque<Integer> level = new ArrayDeque<>();
+            List<Integer> level = new ArrayList<>();
 
             for(int i=0; i<size; i++){
                 TreeNode node = queue.remove();
@@ -36,7 +36,7 @@ class Solution {
                 else level.addFirst(node.val);
             }
 
-            traversal.add(new ArrayList(level));
+            traversal.add(level);
             isLeftToRight = !isLeftToRight;
         }
 
