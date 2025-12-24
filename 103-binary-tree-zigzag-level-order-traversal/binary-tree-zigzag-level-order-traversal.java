@@ -25,7 +25,7 @@ class Solution {
         boolean isLeftToRight= true;
         while(!queue.isEmpty()){
             int size = queue.size();
-            List<Integer> level = new ArrayList<>();
+            List<Integer> level = new LinkedList<>();
 
             for(int i=0; i<size; i++){
                 TreeNode node = queue.remove();
