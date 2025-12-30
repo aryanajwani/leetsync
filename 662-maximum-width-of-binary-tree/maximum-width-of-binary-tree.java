@@ -27,7 +27,7 @@ class Solution {
         //your code goes here
 
         Queue<Tuple> queue = new ArrayDeque<>();
-        queue.add(new Tuple(root, 0));
+        queue.add(new Tuple(root, 1));
 
         int maxWidth = Integer.MIN_VALUE;
 
@@ -35,23 +35,20 @@ class Solution {
             int size = queue.size();
 
             int left=0, right=0;
+            int levelMin = queue.peek().position;
+
             for(int i=0; i<size; i++){
                 Tuple tuple = queue.remove();
                 TreeNode node = tuple.node;
-                
+
                 if(i==0) left=tuple.position;
                 if(i==size-1) right = tuple.position;
 
-                if(node==root){
-                    if(root.left!=null) queue.add(new Tuple(root.left, 1));
+                int relativePosition = tuple.position-levelMin;
 
-                    if(root.right!=null) queue.add(new Tuple(root.right, 2));
+                if(node.left!=null) queue.add(new Tuple(node.left, 2*(relativePosition)+1));
 
-                    continue;
-                }
-                if(node.left!=null) queue.add(new Tuple(node.left, 2*(tuple.position-1)+1));
-
-                if(node.right!=null) queue.add(new Tuple(node.right, 2*(tuple.position-1)+2));
+                if(node.right!=null) queue.add(new Tuple(node.right, 2*(relativePosition)+2));
             }
 
             maxWidth = Math.max(maxWidth, right-left+1);
