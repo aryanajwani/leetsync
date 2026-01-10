@@ -33,39 +33,30 @@ public class Codec {
         return str.toString();
     }
 
-    public TreeNode deserialize(String str) {
-        if(str.equals("#")) return null;
-        
-        int i = str.indexOf(",");
-        TreeNode root = new TreeNode(Integer.valueOf(str.substring(0, i)));
-        i++;
+    public TreeNode deserialize(String data) {
+        if(data.equals("#")) return null;
+
+        String arr[] = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(arr[0]));
 
         Queue<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
-        
+
+        int i=1;
         while(!queue.isEmpty()){
             TreeNode node = queue.remove();
 
-            int j = str.indexOf(",", i);
-            String sub = str.substring(i, j);
-
-            if(sub.equals("#")) node.left=null;
-            else{
-                node.left = new TreeNode(Integer.valueOf(sub));
+            if(!arr[i].equals("#")){
+                node.left = new TreeNode(Integer.valueOf(arr[i]));
                 queue.add(node.left);
             }
+            i++;
 
-            i=j+1;
-            j = str.indexOf(",", i);
-            sub = str.substring(i, j);
-
-            if(sub.equals("#"))node.right=null;
-            else{
-                node.right = new TreeNode(Integer.valueOf(sub));
+            if(!arr[i].equals("#")){
+                node.right = new TreeNode(Integer.valueOf(arr[i]));
                 queue.add(node.right);
             }
-            
-            i=j+1;
+            i++;
         }
 
         return root;
