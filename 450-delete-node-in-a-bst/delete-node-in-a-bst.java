@@ -31,42 +31,26 @@ class Solution {
         // didn't find the value
         if(node==null) return root;
 
+        TreeNode replacement;
         if(node.right!=null && node.left!=null){
             //has both the subtrees
-            if(parent!= null){
-                if(parent.left == node) parent.left = node.left;
-                else parent.right = node.left;
-            }
-            else root = root.left;
 
             findLargestInTree(node.left).right = node.right;
+            replacement = node.left;
         }
+         //leaf node
+        else if(node.right == null && node.left==null) replacement = null;
+         //has only right subtree
+        else if(node.right !=null) replacement = node.right;
+        //has only left subtree
+        else  replacement = node.left;
 
-        else if(node.right == null && node.left==null){
-            //leaf node
-            if(parent !=null){
-                if(parent.left == node) parent.left = null;
-                else parent.right = null;
-            }
-            else return null;
-        }
 
-        else if(node.right !=null){
-            //has only right subtree
-            if(parent !=null){
-                if(parent.left == node) parent.left = node.right;
-                else parent.right = node.right;
-            }
-            else return root.right;
-        }
-        else{
-            //has only left subtree
-            if(parent !=null){
-                if(parent.left == node) parent.left = node.left;
-                else parent.right = node.left;
-            }
-            else return root.left;
-        }
+        // node to be deleted was root itself
+        if(parent == null) return replacement;
+        
+        else if(parent.left == node) parent.left = replacement;
+        else parent.right= replacement;
 
         return root;
     }
