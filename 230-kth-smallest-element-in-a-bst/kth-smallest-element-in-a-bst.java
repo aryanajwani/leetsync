@@ -26,12 +26,12 @@ class Solution {
     void getKSmallest(TreeNode root, int k, int counter[], int[] result){
         if(root == null) return;
 
+        if(result[0] != -1) return;
+        
         getKSmallest(root.left, k, counter, result);
 
         if(counter[0] == k-1) result[0] = root.val;
         counter[0]++;
-
-        if(result[0] != -1) return;
 
         getKSmallest(root.right, k, counter, result);
     }
