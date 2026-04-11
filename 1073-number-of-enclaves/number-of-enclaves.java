@@ -8,15 +8,7 @@ class Solution {
             if(grid[0][j]==1 && !visited[0][j]){
                 bfs(0, j, visited, grid);
             }
-        }
 
-        for(int i=0; i<n; i++){
-            if(grid[i][m-1]==1 && !visited[i][m-1]){
-                bfs(i, m-1, visited, grid);
-            }
-        }
-
-        for(int j=0; j<m; j++){
             if(grid[n-1][j]==1 && !visited[n-1][j]){
                 bfs(n-1, j, visited, grid);
             }
@@ -25,6 +17,9 @@ class Solution {
         for(int i=0; i<n; i++){
             if(grid[i][0]==1 && !visited[i][0]){
                 bfs(i, 0, visited, grid);
+            }
+            if(grid[i][m-1]==1 && !visited[i][m-1]){
+                bfs(i, m-1, visited, grid);
             }
         }
 
