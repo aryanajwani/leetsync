@@ -1,11 +1,9 @@
 class RangeFreqQuery {
 
-    int arr[];
     Map<Integer, List<Integer>> map;
 
     public RangeFreqQuery(int[] arr) {
-        this.arr = arr;
-        createMap();
+        createMap(arr);
     }
     
     public int query(int left, int right, int value) {
@@ -16,7 +14,7 @@ class RangeFreqQuery {
         return upperBound(right, indexes) - lowerBound(left, indexes);
     }
 
-    public void createMap(){
+    public void createMap(int arr[]){
         map = new HashMap<>();
 
         for(int i=0; i<arr.length; i++){
