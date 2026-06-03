@@ -20,10 +20,12 @@ class RangeFreqQuery {
         map = new HashMap<>();
 
         for(int i=0; i<arr.length; i++){
-            if(!map.containsKey(arr[i])){
-                map.put(arr[i], new ArrayList<>());
-            }
-            map.get(arr[i]).add(i);
+            // if(!map.containsKey(arr[i])){
+            //     map.put(arr[i], new ArrayList<>());
+            // }
+            // map.get(arr[i]).add(i);
+
+            map.computeIfAbsent(arr[i], k-> new ArrayList<>()).add(i);
         }
     }
 
