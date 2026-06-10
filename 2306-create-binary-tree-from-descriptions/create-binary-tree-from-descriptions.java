@@ -17,7 +17,7 @@
 class Solution {
     public TreeNode createBinaryTree(int[][] descriptions) {
         Map<Integer, TreeNode> map = new HashMap<>();
-        List<Integer> children = new ArrayList<>();
+        Set<Integer> children = new HashSet<>();
 
         for(int[] arr : descriptions){
             int parent = arr[0], child = arr[1];
@@ -32,8 +32,8 @@ class Solution {
             else parentNode.right = childNode; 
         }
 
-        for(TreeNode node: map.values()){
-            if(!children.contains(node.val)) return node;
+        for(Integer node: map.keySet()){
+            if(!children.contains(node)) return map.get(node);
         }
 
         return null;
