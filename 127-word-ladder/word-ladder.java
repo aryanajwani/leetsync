@@ -21,10 +21,7 @@ class Solution {
             Pair node = queue.remove();
             String word = node.word;
             int level = node.level;
-
-            System.out.println(word +" "+level);
-
-
+            
             for(int i=0; i<n; i++){
                 String prev = word.substring(0, i);
                 String next = word.substring(i+1);
@@ -35,7 +32,7 @@ class Solution {
 
                     if(set.contains(nWord)){
                         if(nWord.equals(endWord)) return level+2;
-                        
+
                         queue.add(new Pair(nWord, level+1));
                         set.remove(nWord);
                     }
