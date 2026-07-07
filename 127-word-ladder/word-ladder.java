@@ -21,22 +21,23 @@ class Solution {
             Pair node = queue.remove();
             String word = node.word;
             int level = node.level;
-            
-            for(int i=0; i<n; i++){
-                String prev = word.substring(0, i);
-                String next = word.substring(i+1);
 
-                for(int j=0; j<26; j++){
-                    char chr = (char)(j+'a');
-                    String nWord = prev+ chr+ next;
+            if(word.equals(endWord)) return level+1;
+
+            char[] charArray = word.toCharArray();
+            for(int i=0; i<n; i++){
+                char old = charArray[i];
+
+                for(char chr= 'a'; chr<='z'; chr++){
+                    charArray[i] = chr;
+                    String nWord = new String(charArray);
 
                     if(set.contains(nWord)){
-                        if(nWord.equals(endWord)) return level+2;
-
                         queue.add(new Pair(nWord, level+1));
                         set.remove(nWord);
                     }
-                }  
+                }
+                charArray[i] = old;  
             }
         }
 
