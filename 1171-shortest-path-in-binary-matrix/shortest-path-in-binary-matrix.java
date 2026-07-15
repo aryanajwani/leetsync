@@ -5,10 +5,10 @@ class Solution {
         int n = grid.length;
 
         Queue<int[]> queue = new ArrayDeque<>();
-        boolean[][] visited = new boolean[n][n];
+        // boolean[][] visited = new boolean[n][n];
 
         queue.add(new int[]{0, 0});
-        visited[0][0] = true;
+        // visited[0][0] = true;
 
         int level=0;
         int[][] directions = {
@@ -31,12 +31,13 @@ class Solution {
                     int nrow = row+ direction[0];
                     int ncolumn = column+direction[1];
 
-                    if(isOuter(nrow, ncolumn, n)) continue;
+                    if(isOuter(nrow, ncolumn, n) || grid[nrow][ncolumn] ==1 ) continue;
 
-                    if(grid[nrow][ncolumn] ==1 || visited[nrow][ncolumn]) continue;
+                    // if(grid[nrow][ncolumn] ==1 || visited[nrow][ncolumn]) continue;
 
                     queue.add(new int[]{nrow, ncolumn});
-                    visited[nrow][ncolumn] = true; 
+                    grid[nrow][ncolumn] = 1;
+                    // visited[nrow][ncolumn] = true; 
                 }
             }
 
