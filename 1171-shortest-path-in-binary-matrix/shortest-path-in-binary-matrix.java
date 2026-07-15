@@ -6,15 +6,7 @@ class Solution {
         int m  = grid[0].length;
 
         Queue<int[]> queue = new ArrayDeque<>();
-
         boolean[][] visited = new boolean[n][m];
-
-        for(int i=0; i<visited.length; i++){
-
-            for(int j=0; j<visited[0].length; j++){
-                visited[i][j] = false;
-            }
-        }
 
         queue.add(new int[]{0, 0});
         visited[0][0] = true;
