@@ -5,6 +5,7 @@ class Solution {
         int[][] adj = new int[n][n];
         generateAdjMatrix(edges, adj, n);
 
+        //floyd-warshall algo 
         for(int via=0; via<n; via++){
             for(int i=0; i<n; i++){  
                 for(int j=0; j<n; j++){
@@ -36,6 +37,15 @@ class Solution {
     }
 
     void generateAdjMatrix(int[][] edges, int[][] adj, int n){
+        int INF = 100000;
+
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if (i == j) adj[i][j] = 0;
+                else adj[i][j] = INF;
+            }
+        }
+
         for(int[] edge : edges){
             int u = edge[0];
             int v = edge[1];
@@ -44,8 +54,6 @@ class Solution {
             adj[u][v] = w;
             adj[v][u] = w;
         }
-
-        for(int i=0; i<n; i++) for(int j=0; j<n; j++) if(i!=j && adj[i][j]==0) adj[i][j] = 100000;
     }
 }
 //    0  1  2  3
