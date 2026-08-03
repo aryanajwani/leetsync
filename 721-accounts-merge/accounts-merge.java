@@ -4,7 +4,7 @@ class Solution {
         DisjointSet dset = new DisjointSet(n);
 
         //email -> node
-        Map<String, Integer> map = new LinkedHashMap<>();
+        Map<String, Integer> map = new HashMap<>();
 
         for(int i=0; i<n; i++){
             List<String> account = accounts.get(i);
