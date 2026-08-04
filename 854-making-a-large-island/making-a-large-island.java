@@ -47,13 +47,11 @@ class Solution {
         DisjointSet dset = new DisjointSet(n*n);
         int directions[][] = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
-        boolean isVisited[][] = new boolean[n][n];
         int maxSize=0;
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
                 if(arr[i][j] == 0) continue;
 
-                isVisited[i][j] = true;
                 int node = n*i + j;
 
                 for(int dir[] : directions){
@@ -63,7 +61,7 @@ class Solution {
                     if(isValid(ni, nj, n, n)){
                         int neighbour  = n*ni + nj;
 
-                        if(isVisited[ni][nj]){
+                        if(arr[ni][nj]==1){
                             dset.unionBySize(neighbour, node);
                         }
                     }
