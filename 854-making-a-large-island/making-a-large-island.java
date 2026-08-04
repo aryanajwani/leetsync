@@ -73,9 +73,6 @@ class Solution {
             }
         }
 
-        for(int i=0; i<n*n; i++) if(dset.parent[i] == i) System.out.print(i +" "+dset.size[i]+" ");
-        System.out.println();
-
         for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
 
