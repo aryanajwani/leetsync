@@ -25,7 +25,7 @@ class Solution {
     boolean canEat(int time, int h, int[] piles){
         long t=0;
         for(int i=0; i<piles.length; i++){
-            t += Math.ceil((double)piles[i]/time);
+            t += (piles[i] +time-1) / time;
         }
 
         return t <= h;
