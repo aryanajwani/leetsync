@@ -1,67 +1,49 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        int fresh=0;
+
+        //row, column, time
         Queue<int[]> queue = new ArrayDeque<>();
-        boolean[][] isRotten = new boolean[grid.length][grid[0].length];
 
-
-        //add intitial rotten to the queue
-        for(int i=0; i<grid.length; i++){
-            for(int j=0; j<grid[0].length; j++){
-                if(grid[i][j] == 2){
-                    queue.add(new int[]{i, j});
-                    isRotten[i][j] = true;
-                }
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j] == 1) fresh++;
+                else if(grid[i][j] ==2) queue.add(new int[]{i, j, 0});
             }
         }
 
-        int time= bfs(grid, queue, isRotten);
+        int count=0;
+        int[][] delta = {
+            {0, -1}, {0, 1}, {1, 0}, {-1, 0}
+        };
 
-        for(int i=0; i<grid.length; i++){
-            for(int j=0; j<grid[0].length; j++){
-                if(grid[i][j] == 1 && !isRotten[i][j]){
-                    return -1;
-                }
-            }
-        }
-
-        return time;
-    }
-
-
-    int bfs(int[][] grid, Queue<int[]> queue, boolean[][] isRotten){
-        if(queue.isEmpty()) return 0;
-        
-        int time =0;
-
+        int t=0;
         while(!queue.isEmpty()){
-            int size = queue.size();
+            int[] entry = queue.remove();
+            int i = entry[0];
+            int j = entry[1];
+            t = entry[2];
 
-            for(int i=0; i<size; i++){
-                int[] orange = queue.remove();
-                int row = orange[0];
-                int column = orange[1];
+            for(int[] del: delta){
+                int i_ = i+del[0];
+                int j_ = j+del[1];
 
-                int delRow[] = {-1, 1, 0, 0};
-                int delColumn[] = {0, 0, -1, 1};
-
-                for(int j=0; j<4; j++){
-                    int nRow = row + delRow[j];
-                    int nColumn = column + delColumn[j];
-
-                    if(isValidIndex(nRow, nColumn, grid) && grid[nRow][nColumn]==1 && !isRotten[nRow][nColumn]){
-                        queue.add(new int[]{nRow, nColumn});
-                        isRotten[nRow][nColumn] = true;
-                    }
+                if(isValid(i_, j_, n, m) && grid[i_][j_]==1){
+                    grid[i_][j_]=2;
+                    queue.add(new int[]{i_, j_, t+1});
+                    ++count;
                 }
             }
-
-            time++;
         }
 
-        return time-1;
+        if(count == fresh) return t;
+        return -1;
     }
 
-    boolean isValidIndex(int row, int column, int[][] grid){
-        return row>=0 && row<grid.length && column>=0 && column<grid[0].length;
+    boolean isValid(int row, int column, int n, int m){
+        return row<n && row>=0 && column<m && column>=0;
     }
 }
