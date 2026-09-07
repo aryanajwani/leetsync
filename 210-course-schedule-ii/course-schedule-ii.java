@@ -1,7 +1,5 @@
 class Solution {
     public int[] findOrder(int n, int[][] prerequisites) {
-        int indegree[] = new int[n];
-
         List<Integer>[] adj = new ArrayList[n];
         for(int i=0; i<n; i++) adj[i] = new ArrayList<>();
 
@@ -10,26 +8,39 @@ class Solution {
             int v = edge[0];
 
             adj[u].add(v);
-            indegree[v]++;
         }
 
-        Queue<Integer> queue = new ArrayDeque<>();
-        for(int i=0; i<n; i++) if(indegree[i] ==0) queue.add(i);
+        boolean[] visited=new boolean[n];
 
-        int[] result= new int[n];
-        int index=0;
-
-        while(!queue.isEmpty()){
-            int node = queue.remove();
-            result[index++] = node;
-
-            for(int v : adj[node]){
-                if(--indegree[v] ==0) queue.add(v);
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int i=0; i<n; i++){
+            if(!visited[i]){
+                if(!dfs(i, visited, adj, stack, new ArrayList<>())) return new int[0];            
             }
         }
 
-        if(index<n) return new int[0];
+        int result[] = new int[n];
+        int index=0;
+        while(!stack.isEmpty()) result[index++]= stack.pop();
 
         return result;
+    }
+
+    //return false if contains cycle
+    boolean dfs(int node, boolean[] visited, List<Integer>[] adj, Deque<Integer> stack, List<Integer> currpath){
+        currpath.add(node);
+
+        for(int n : adj[node]){
+            if(!visited[n]){
+                if(currpath.contains(n)) return false;
+                if(!dfs(n, visited, adj, stack, currpath)) return false;
+            }
+        }
+
+        currpath.removeLast();
+        visited[node]= true;
+        stack.push(node);
+
+        return true;
     }
 }
