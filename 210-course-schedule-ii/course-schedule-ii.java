@@ -15,7 +15,7 @@ class Solution {
         Deque<Integer> stack = new ArrayDeque<>();
         for(int i=0; i<n; i++){
             if(!visited[i]){
-                if(!dfs(i, visited, adj, stack, new HashSet<>())) return new int[0];            
+                if(!dfs(i, visited, adj, stack, new boolean[n])) return new int[0];            
             }
         }
 
@@ -27,17 +27,17 @@ class Solution {
     }
 
     //return false if contains cycle
-    boolean dfs(int node, boolean[] visited, List<Integer>[] adj, Deque<Integer> stack, Set<Integer> currpath){
-        currpath.add(node);
+    boolean dfs(int node, boolean[] visited, List<Integer>[] adj, Deque<Integer> stack, boolean[] currpath){
+        currpath[node] = true;
 
         for(int n : adj[node]){
             if(!visited[n]){
-                if(currpath.contains(n)) return false;
+                if(currpath[n] == true) return false;
                 if(!dfs(n, visited, adj, stack, currpath)) return false;
             }
         }
 
-        currpath.remove(node);
+        currpath[node] = false;
         visited[node]= true;
         stack.push(node);
 
