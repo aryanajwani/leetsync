@@ -1,8 +1,16 @@
 class Solution {
     public int[] findOrder(int n, int[][] prerequisites) {
         int indegree[] = new int[n];
+
+        List<Integer>[] adj = new ArrayList[n];
+        for(int i=0; i<n; i++) adj[i] = new ArrayList<>();
+
         for(int[] edge : prerequisites){
-            indegree[edge[0]]++;
+            int u = edge[1];
+            int v = edge[0];
+
+            adj[u].add(v);
+            indegree[v]++;
         }
 
         Queue<Integer> queue = new ArrayDeque<>();
@@ -13,13 +21,10 @@ class Solution {
 
         while(!queue.isEmpty()){
             int node = queue.remove();
-
             result[index++] = node;
 
-            for(int[] edge : prerequisites){
-                if(edge[1]== node){
-                    if (--indegree[edge[0]] ==0) queue.add(edge[0]);
-                }
+            for(int v : adj[node]){
+                if(--indegree[v] ==0) queue.add(v);
             }
         }
 
