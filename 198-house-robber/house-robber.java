@@ -1,21 +1,19 @@
 class Solution {
     public int rob(int[] arr) {
-        int[] dp = new int[arr.length];
-        Arrays.fill(dp, -1);
+        int n = arr.length;
 
-        return maxSumFrom(0, arr, dp);
-    }
+        int[] dp = new int[n];
+        dp[n-1] = arr[n-1];
 
-    int maxSumFrom(int i, int[] arr, int[] dp){
-        if(i==arr.length-1) return arr[i];
+        for(int i=n-2; i>=0; i--){
+            int skip = dp[i+1];
 
-        if(dp[i] !=-1) return dp[i];
+            int take = (i+2 < arr.length)? 
+                            arr[i]+dp[i+2] : arr[i];
 
-        int skip = maxSumFrom(i+1, arr, dp);
+            dp[i] = Math.max(skip, take);
+        }
 
-        int take = (i+2 < arr.length)? 
-            arr[i]+maxSumFrom(i+2, arr, dp) : arr[i];
-
-        return dp[i] = Math.max(skip, take);
+        return dp[0];
     }
 }
