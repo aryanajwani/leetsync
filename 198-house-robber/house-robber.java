@@ -1,21 +1,18 @@
 class Solution {
-    public int rob(int[] arr) {
-        int n = arr.length;
-
-        int next = arr[n-1];
-        int nextnext = -1;
+    public int rob(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[n-1]= nums[n-1];
 
         for(int i=n-2; i>=0; i--){
-            int skip = next;
+            int pick= nums[i];
+            if(i+2<n) pick += dp[i+2];
 
-            int take= (nextnext!=-1)? arr[i]+nextnext : arr[i];
+            int notpick = dp[i+1];
 
-            int current = Math.max(skip, take);
-
-            nextnext = next;
-            next = current;
+            dp[i] = Math.max(pick, notpick);
         }
 
-        return next;
+        return dp[0];
     }
 }
