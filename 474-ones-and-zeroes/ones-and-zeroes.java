@@ -1,7 +1,8 @@
 class Solution {
     public int findMaxForm(String[] strs, int zeroes, int ones) {
         int n = strs.length;
-        int dp[][][] = new int[n][zeroes+1][ones+1];
+        int prev[][] = new int[zeroes+1][ones+1];
+        int current[][] = new int[zeroes+1][ones+1];
 
         //set base cases
         int[][] count = new int[n][2];
@@ -9,8 +10,8 @@ class Solution {
 
         for(int z=0; z<=zeroes; z++){
             for(int o=0; o<=ones; o++){
-                if(count[0][0]<=z && count[0][1]<=o) dp[0][z][o] = 1;
-                else dp[0][z][o] = 0;
+                if(count[0][0]<=z && count[0][1]<=o) prev[z][o] = 1;
+                else prev[z][o] = 0;
             }
         }
 
@@ -18,19 +19,23 @@ class Solution {
         for(int i=1; i<n; i++){
             for(int z=0; z<=zeroes; z++){
                 for(int o=0; o<=ones; o++){
-                    int nottake = dp[i-1][z][o];
+                    int nottake = prev[z][o];
 
                     int take = Integer.MIN_VALUE;
 
                     if(count[i][0]<=z && count[i][1]<=o)
-                        take = 1 + dp[i-1][z-count[i][0]][o-count[i][1]];
+                        take = 1 + prev[z-count[i][0]][o-count[i][1]];
 
-                    dp[i][z][o] = Math.max(take, nottake);
+                    current[z][o] = Math.max(take, nottake);
                 }
             }
+
+            int[][] temp = prev;
+            prev = current;
+            current = temp;
         }
 
-        return dp[n-1][zeroes][ones];
+        return prev[zeroes][ones];
     }
 
     void generateCount(int[][] count, String[] strs){
