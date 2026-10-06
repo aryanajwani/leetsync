@@ -7,8 +7,7 @@ class Solution {
         int k =sum;
         boolean prev[] = new boolean[k+1];
 
-        for(int i=0; i<n; i++) prev[0] = true;
-        
+        prev[0] = true;
         prev[arr[0]] = true;
 
         for(int i=1; i<n; i++){
