@@ -1,14 +1,13 @@
 class Solution {
     public int minCost(int n, int[] c) {
         int[] cuts  = new int[c.length+2];
-        cuts[0] =0;
-        for(int i=1; i<cuts.length-1; i++) cuts[i] = c[i-1];
-        cuts[cuts.length-1] = n;
+        cuts[0] = 0;
+        System.arraycopy(c, 0, cuts, 1, c.length);
+        cuts[c.length+1] = n;
         Arrays.sort(cuts);
 
         int[][] dp = new int[cuts.length-1][cuts.length];
         for(int i=0; i<dp.length; i++) Arrays.fill(dp[i], -1);
-
 
         return minCostBetween(0, cuts.length-1, cuts, dp);
     }
