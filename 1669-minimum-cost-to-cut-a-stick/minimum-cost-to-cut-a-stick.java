@@ -1,37 +1,33 @@
-record Pair(int i, int j){}
-
 class Solution {
-    
-    public int minCost(int n, int[] cuts) {
+    public int minCost(int n, int[] c) {
+        int[] cuts  = new int[c.length+2];
+        cuts[0] =0;
+        for(int i=1; i<cuts.length-1; i++) cuts[i] = c[i-1];
+        cuts[cuts.length-1] = n;
         Arrays.sort(cuts);
 
-        Map<Pair, Integer> map = new HashMap<>();
+        int[][] dp = new int[cuts.length-1][cuts.length];
+        for(int i=0; i<dp.length; i++) Arrays.fill(dp[i], -1);
 
-        return minBetween(0, n, cuts, map);
+
+        return minCostBetween(0, cuts.length-1, cuts, dp);
     }
 
-    int minBetween(int i, int j, int[] cuts, Map<Pair, Integer> map){
-        Pair pair = new Pair(i, j);
+    int minCostBetween(int i, int j, int[] cuts, int[][] dp){
+        if(cuts[i+1] == cuts[j]) return 0;
 
-        if(map.containsKey(pair)) return map.get(pair);
-        
-        int min = Integer.MAX_VALUE;
-        for(int k=0; k<cuts.length; k++){
-            if(cuts[k]> i && cuts[k]<j){
-                int right = minBetween(i, cuts[k], cuts, map);
-                int left = minBetween(cuts[k], j, cuts, map);
+        if(dp[i][j] !=-1) return dp[i][j];
 
-                min = Math.min(min, right+left);
-            }
+        int minCost = Integer.MAX_VALUE;
+        for(int k=i+1; k<j; k++){
+            int right  = minCostBetween(i, k, cuts, dp);
+            int left = minCostBetween(k, j, cuts, dp);
+
+            int cost = right+left;
+            minCost = Math.min(minCost, cost);
         }
 
-        int result;
-
-        if(min==Integer.MAX_VALUE) result = 0;
-        else result =  j-i +min;
-
-        map.put(pair, result);
-        return result;
+        return dp[i][j] = cuts[j]-cuts[i] + minCost;
     }
 }
 
